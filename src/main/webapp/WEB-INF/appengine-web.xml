@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+ <application>sareetapandamyweb</application> <!-- studiofieldnzb -->
+ <version>1</version>  
+ <threadsafe>true</threadsafe>
+ 
+ <!--
+   HTTP Sessions are disabled by default. To enable HTTP sessions specify:-->
+   <sessions-enabled>true</sessions-enabled>
+   
+   <!-- t's possible to reduce request latency by configuring your application to
+   asynchronously write HTTP session data to the datastore: -->
+ <async-session-persistence enabled="true" />
+ 
+</appengine-web-app>

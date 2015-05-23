@@ -1,0 +1,73 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'appengine'
+apply plugin: 'war'
+
+
+sourceCompatibility = 1.6
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'sareetapandamyweb', 'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+appengine {
+	httpPort = 8999
+	downloadSdk = true
+	httpAddress = '0.0.0.0'
+	/*stopPort = 8199
+	stopKey = 'STOP'*/
+	jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9988',
+	'-Ddatastore.backing_store=C:/gae/local_db_w.bin']
+	
+	appcfg {
+		email = 'testsapanda@gmail.com'
+		oauth2 = true
+		logs {
+			severity = 1
+			outputFile = file('mylogs.txt')
+		}
+		app {
+			id = 'sareetapandamyweb'
+		}
+	}
+}
+
+buildscript {
+	repositories {
+		mavenCentral()
+// https://github.com/mgoellnitz/tangram-examples/blob/master/example-jpa-gae/build.gradle
+maven {
+url "https://raw.githubusercontent.com/mgoellnitz/artifacts/master" }
+}
+
+	dependencies {
+		classpath 'com.google.appengine:gradle-appengine-plugin:1.9.20'
+		// for Enhancer
+		classpath 'tangram:gradle-plugin:0.9-SNAPSHOT'
+	}
+}
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+	// GAE
+	appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.20'
+	compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.20'
+	compile 'com.google.appengine:appengine-api-labs:1.9.20'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
